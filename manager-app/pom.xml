@@ -59,6 +59,7 @@
                     </excludes>
                     <classifier>exec</classifier>
                 </configuration>
+                <!-- Для того, чтобы в результате сборки получался fat jar-->
                 <executions>
                     <execution>
                         <goals>
@@ -69,5 +70,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
