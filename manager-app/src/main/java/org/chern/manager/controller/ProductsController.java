@@ -7,10 +7,7 @@ import org.chern.manager.entity.Product;
 import org.chern.manager.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Data
@@ -41,6 +38,17 @@ public class ProductsController {
     @PostMapping("create")
     public String createProduct(NewProductPayload payload) {
         Product product = productService.createProduct(payload.title(), payload.details());
-        return  "redirect:/catalogue/products/list";
+        return  "redirect:/catalogue/products/%d".formatted(product.getId());
+    }
+
+    //получить конкретный товар по его id
+    /*
+    Несмотря на то, что при компиляции имена параметров сохраняются при текущих настройках,
+    указать имя переменной пути  - желательно.
+    * */
+    @GetMapping("{productId:\\d+}")
+    public String getProduct(@PathVariable("productId") int productId, Model model) {
+        model.addAttribute("product", this.productService.findProductById(productId).orElseThrow());
+        return "catalogue/products/product";
     }
 }

@@ -8,6 +8,7 @@ import org.chern.manager.repo.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Data
@@ -24,4 +25,11 @@ public class DefaultProductService implements ProductService {
     public Product createProduct(String title, String details) {
         return this.productRepository.save(new Product(null, title, details));
     }
+
+    @Override
+    public Optional<Product> findProductById(int productId) {
+        return this.productRepository.findById(productId);
+    }
+
+
 }

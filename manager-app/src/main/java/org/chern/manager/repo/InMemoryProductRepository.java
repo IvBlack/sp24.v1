@@ -3,30 +3,14 @@ package org.chern.manager.repo;
 import org.chern.manager.entity.Product;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
-
-/*
-    Данные хранятся в памяти,
-    а именно рандомно генерируются в конструкторе класса репозитория.
-*/
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
 
     //лист товаров оптимизирован для многопоточности
     List<Product> products = Collections.synchronizedList(new LinkedList<>());
-
-    InMemoryProductRepository() {
-        IntStream.range(1, 4)
-                .forEach(i -> this.products.add(
-                        new Product(i, "Номер товара %d".formatted(i),
-                                "Описание товара %d".formatted(i))
-                ));
-    }
 
 
     /*
@@ -34,16 +18,13 @@ public class InMemoryProductRepository implements ProductRepository {
         то любой компонент может получить к нему доступ.
     */
     @Override
-    public List<Product> findAll() {
-        return Collections.unmodifiableList(this.products);
-    }
+    public List<Product> findAll() {return Collections.unmodifiableList(this.products);}
 
 
     /*
     Поскольку хранение данных сейчас - inMemory,
     мысль состоит в получении максимального id товара из текущей коллекции
-    и увеличении значения на 1,
-    с последующим добавлением нового товара в коллекцию.
+    и увеличении значения на 1, с последующим добавлением нового товара в коллекцию.
     orElse предусматривает отсутствие товаров в коллекции.
     * */
     @Override
@@ -56,5 +37,14 @@ public class InMemoryProductRepository implements ProductRepository {
                             + 1);
         this.products.add(product);
         return product;
+    }
+
+
+    //поиск продукта по переданному id.
+    @Override
+    public Optional<Product> findById(int productId) {
+        return this.products.stream()
+                .filter(product -> Objects.equals(productId, product.getId()))
+                .findFirst();
     }
 }
