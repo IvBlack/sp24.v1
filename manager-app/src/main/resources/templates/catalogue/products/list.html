@@ -5,6 +5,7 @@
     <title>Список товаров &ndash; Ритейл</title>
 </head>
 <body>
+<a data-th-href="@{/catalogue/products/create}">+ Создать новый товар..</a>
     <table>
         <thead>
         <tr>
@@ -12,6 +13,7 @@
             <th>Товар</th>
         </tr>
         </thead>
+        <!-- Цикл по полям сущности Product методами thymeleaf-->
         <tbody>
             <tr data-th-each="product : ${products}">
                 <td data-th-text="${product.id}"></td>
