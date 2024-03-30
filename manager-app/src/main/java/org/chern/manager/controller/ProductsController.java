@@ -40,15 +40,4 @@ public class ProductsController {
         Product product = productService.createProduct(payload.title(), payload.details());
         return  "redirect:/catalogue/products/%d".formatted(product.getId());
     }
-
-    //получить конкретный товар по его id
-    /*
-    Несмотря на то, что при компиляции имена параметров сохраняются при текущих настройках,
-    указать имя переменной пути  - желательно.
-    * */
-    @GetMapping("{productId:\\d+}")
-    public String getProduct(@PathVariable("productId") int productId, Model model) {
-        model.addAttribute("product", this.productService.findProductById(productId).orElseThrow());
-        return "catalogue/products/product";
-    }
 }
