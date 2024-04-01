@@ -6,15 +6,22 @@
 </head>
 <body>
 <h1>Новый товар!</h1>
+<!-- Валидация данныхъ формы.-->
+<div data-th-if="${errors}">
+    <h1>Допущены ошибки при вводе...</h1>
+    <ul>
+        <li data-th-each="error : ${errors}" data-th-text="${error}"></li>
+    </ul>
+</div>
 <a data-th-href="@{/catalogue/products/list}">&larr; К списку товаров..</a>
     <form method="post" data-th-action="@{/catalogue/products/create}">
         <label>
-            Название товара:
-            <input type="text" name="title">
+            Название товара:<br/>
+            <input type="text" name="title" data-th-value="${payload?.title}">
         </label><br>
         <label>
             Описание товара:
-            <textarea name="details"></textarea>
+            <textarea name="details" data-th-text="${payload?.details}"></textarea>
         </label><br>
         <button type="submit">Создать..</button>
     </form>

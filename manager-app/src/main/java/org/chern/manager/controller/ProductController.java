@@ -1,11 +1,16 @@
 package org.chern.manager.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.chern.manager.controller.payload.UpdateProductPayload;
 import org.chern.manager.entity.Product;
 import org.chern.manager.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
 
 
 /*Контроллер предназначен для работы с конкретным продуктом*/
@@ -52,5 +57,14 @@ public class ProductController {
     public String deleteProduct(@ModelAttribute("product") Product product) {
         this.productService.deleteProduct(product.getId());
         return "redirect:/catalogue/products/list";
+    }
+
+    //метод отлавливает ошибки не найденной по запросу сущности
+    @ExceptionHandler(NoSuchElementException.class)
+    public String handleNoSuchElementException(NoSuchElementException ex, Model model,
+                                               HttpServletResponse response) {
+        response.setStatus(HttpStatus.NOT_FOUND.value());
+        model.addAttribute("error", ex.getMessage());
+        return "catalogue/products/errors/404";
     }
 }
