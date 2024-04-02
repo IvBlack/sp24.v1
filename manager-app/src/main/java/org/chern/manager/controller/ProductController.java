@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.chern.manager.controller.payload.UpdateProductPayload;
 import org.chern.manager.entity.Product;
 import org.chern.manager.service.ProductService;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 
@@ -20,6 +22,7 @@ import java.util.NoSuchElementException;
 public class ProductController {
 
     private final ProductService productService;
+    private final MessageSource messageSource;
 
     /*
         Решает проблему задвоения кода в методах работы с продуктом
@@ -27,7 +30,8 @@ public class ProductController {
     */
     @ModelAttribute("product")
     public Product product(@PathVariable("productId") int productId) {
-        return this.productService.findProductById(productId).orElseThrow();
+        return this.productService.findProductById(productId).orElseThrow(()
+                -> new NoSuchElementException("{catalogue.errors.product.not_found}"));
     }
 
     //получить конкретный товар по его id
@@ -62,9 +66,10 @@ public class ProductController {
     //метод отлавливает ошибки не найденной по запросу сущности
     @ExceptionHandler(NoSuchElementException.class)
     public String handleNoSuchElementException(NoSuchElementException ex, Model model,
-                                               HttpServletResponse response) {
+                                               HttpServletResponse response, Locale locale) {
         response.setStatus(HttpStatus.NOT_FOUND.value());
-        model.addAttribute("error", ex.getMessage());
-        return "catalogue/products/errors/404";
+        model.addAttribute("error",
+                this.messageSource.getMessage(ex.getMessage(), new Object[0], ex.getMessage(), locale));
+        return "errors/404";
     }
 }

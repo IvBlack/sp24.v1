@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Товар не найден по запросу..</title>
+    <title data-th-text="#{'errors.404.title'}">Товар не найден по запросу..</title>
 </head>
 <body>
-    <h1 data-th-text="${error}">Ошибка</h1>
+    <h1 data-th-text="#{'errors.404.header'}">Ошибка</h1>
+    <h1 data-th-text="${error}"></h1>
 </body>
 </html>

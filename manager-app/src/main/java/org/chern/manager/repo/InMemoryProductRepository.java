@@ -42,7 +42,7 @@ public class InMemoryProductRepository implements ProductRepository {
 
     //поиск продукта по переданному id.
     @Override
-    public Optional<Product> findById(int productId) {
+    public Optional<Product> findById(Integer productId) {
         return this.products.stream()
                 .filter(product -> Objects.equals(productId, product.getId()))
                 .findFirst();
