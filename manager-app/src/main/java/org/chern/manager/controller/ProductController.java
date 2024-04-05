@@ -36,9 +36,7 @@ public class ProductController {
 
     //получить конкретный товар по его id
     @GetMapping
-    public String getProduct() {
-        return "catalogue/products/product";
-    }
+    public String getProduct() {return "catalogue/products/product";}
 
     //редакция определенного товара
     @GetMapping("edit")
