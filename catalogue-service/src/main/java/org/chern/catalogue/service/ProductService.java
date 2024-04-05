@@ -1,6 +1,6 @@
-package org.chern.manager.service;
+package org.chern.catalogue.service;
 
-import org.chern.manager.entity.Product;
+import org.chern.catalogue.entity.Product;
 
 import java.util.List;
 import java.util.Optional;

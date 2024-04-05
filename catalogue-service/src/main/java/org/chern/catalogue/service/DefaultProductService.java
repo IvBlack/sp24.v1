@@ -1,10 +1,9 @@
-package org.chern.manager.service;
+package org.chern.catalogue.service;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.chern.manager.entity.Product;
-import org.chern.manager.repo.InMemoryProductRepository;
-import org.chern.manager.repo.ProductRepository;
+import org.chern.catalogue.entity.Product;
+import org.chern.catalogue.repo.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

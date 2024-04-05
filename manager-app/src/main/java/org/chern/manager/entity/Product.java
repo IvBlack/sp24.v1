@@ -1,14 +1,8 @@
 package org.chern.manager.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Product {
-    private Integer id;
-    private String title;
-    private String details;
+/*
+Сущность становится record, т.к. со стороны приложения менеджера уже
+не д.б. возможности редактировать товар.
+*/
+public record Product(int id, String name, String details) {
 }

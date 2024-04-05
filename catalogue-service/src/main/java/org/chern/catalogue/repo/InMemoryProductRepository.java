@@ -1,10 +1,9 @@
-package org.chern.manager.repo;
+package org.chern.catalogue.repo;
 
-import org.chern.manager.entity.Product;
+import org.chern.catalogue.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
