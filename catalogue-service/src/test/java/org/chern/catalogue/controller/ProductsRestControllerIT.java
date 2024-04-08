@@ -1,4 +1,4 @@
-package ag.selm.catalogue.controller;
+package org.chern.catalogue.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

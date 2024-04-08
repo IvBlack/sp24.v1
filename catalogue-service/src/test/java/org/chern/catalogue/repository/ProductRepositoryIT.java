@@ -1,4 +1,4 @@
-package ag.selm.catalogue.repository;
+package org.chern.catalogue.repository;
 
 import ag.selm.catalogue.entity.Product;
 import org.junit.jupiter.api.Test;

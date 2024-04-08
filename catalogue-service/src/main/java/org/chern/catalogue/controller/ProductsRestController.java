@@ -29,9 +29,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @RequestMapping("catalogue-api/products")
 public class ProductsRestController {
-
     private final ProductService productService;
-
     private final MessageSource messageSource;
 
     @GetMapping
@@ -46,7 +44,7 @@ public class ProductsRestController {
         ProblemDetail обрабатывает ошибку, возращает описание юзеру
     */
     @PostMapping
-    public ResponseEntity<?> createproduct(@Valid @RequestBody NewProductPayload payload,
+    public ResponseEntity<?> createProduct(@Valid @RequestBody NewProductPayload payload,
                                                  BindingResult bindingResult,
                                                  UriComponentsBuilder uriComponentsBuilder,
                                                  Locale locale) {
@@ -54,11 +52,10 @@ public class ProductsRestController {
             //структура с кодом, описанием и списком ошибок >>>>>>>>>
             ProblemDetail problemDetail = ProblemDetail
                     .forStatusAndDetail(HttpStatus.BAD_REQUEST,
-                            Objects.requireNonNull(this.messageSource
-                                    .getMessage("errors.400.title", new Object[0], "errors.400.title", locale)));
+                            Objects.requireNonNull(this.messageSource.getMessage("errors.400.title",
+                                    new Object[0], "errors.400.title", locale)));
             problemDetail.setProperty("errors", bindingResult.getAllErrors()
-                    .stream()
-                    .map(ObjectError::getDefaultMessage)
+                    .stream().map(ObjectError::getDefaultMessage)
                     .toList());
             //>>>>>>>>>>>>>>>>>>>
             return ResponseEntity.badRequest().body(problemDetail);

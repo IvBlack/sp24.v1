@@ -1,4 +1,4 @@
-package ag.selm.catalogue.config;
+package org.chern.catalogue.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package ag.selm.catalogue.controller;
+package org.chern.catalogue.controller;
 
 import ag.selm.catalogue.controller.payload.NewProductPayload;
 import ag.selm.catalogue.entity.Product;

@@ -1,4 +1,4 @@
-package ag.selm.catalogue.service;
+package org.chern.catalogue.service;
 
 import ag.selm.catalogue.entity.Product;
 import ag.selm.catalogue.repository.ProductRepository;

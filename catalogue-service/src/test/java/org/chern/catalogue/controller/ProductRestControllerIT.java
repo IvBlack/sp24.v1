@@ -1,4 +1,4 @@
-package ag.selm.catalogue.controller;
+package org.chern.catalogue.controller;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
