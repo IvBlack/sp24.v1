@@ -47,8 +47,8 @@ public class ProductRestController {
         то в блоке ..else {} нет смысла возвращать объект.
     */
     @PatchMapping
-    public ResponseEntity<?> updateProduct(@Valid @PathVariable("productId") int productId,
-                                           @RequestBody UpdateProductPayload payload,
+    public ResponseEntity<?> updateProduct(@PathVariable("productId") int productId,
+                                           @Valid @RequestBody UpdateProductPayload payload,
                                            BindingResult bindingResult) throws BindException {
         if(bindingResult.hasErrors()) {
             if(bindingResult instanceof BindException exception) {
@@ -61,5 +61,24 @@ public class ProductRestController {
             return ResponseEntity.noContent()
                     .build();
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") int productId) {
+        this.productService.deleteProduct(productId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    //метод отработает, если сущность не будет найдена при операциях CRUD
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ProblemDetail> handleNoSuchElementException(NoSuchElementException ex, Locale locale) {
+        //собираем ответ с нужным статусом и телом, локализацией, интернационализацией
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,
+                        Objects.requireNonNull(this.messageSource
+                                .getMessage(ex.getMessage(), new Object[0],
+                                        ex.getMessage(), locale))
+                ));
     }
 }
