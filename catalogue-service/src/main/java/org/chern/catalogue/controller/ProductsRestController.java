@@ -60,7 +60,7 @@ public class ProductsRestController {
         } else {
             Product product = this.productService.createProduct(payload.title(), payload.details());
             return ResponseEntity.created(uriComponentsBuilder
-                            .replacePath("catalogue-api/products/{productId}")
+                            .replacePath("/catalogue-api/products/{productId}")
                             .build(Map.of("productId", product.getId())))
                     .body(product);
         }
