@@ -5,6 +5,12 @@ import org.chern.manager.entity.Product;
 import java.util.List;
 import java.util.Optional;
 
+/*
+Клиент создан для реализации логики работы с товарами со стороны клиентского приложения менеджера,
+взамен ушедшим в catalogue сервисам.
+Клиент реализован на базе RestClient, но его можно реализовать так же с помощью
+RestTemplate Spring.
+* */
 public interface ProductsRestClient {
     public List<Product> findAllProducts();
 

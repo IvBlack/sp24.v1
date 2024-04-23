@@ -5,21 +5,15 @@ import lombok.RequiredArgsConstructor;
 import org.chern.catalogue.controller.payload.NewProductPayload;
 import org.chern.catalogue.entity.Product;
 import org.chern.catalogue.service.ProductService;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /*
     Классы данных необходимо создавать индивидуально для каждого модуля приложения,
