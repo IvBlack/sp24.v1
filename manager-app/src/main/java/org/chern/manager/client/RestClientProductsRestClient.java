@@ -85,7 +85,7 @@ public class RestClientProductsRestClient  implements ProductsRestClient {
             .contentType(MediaType.APPLICATION_JSON)
             .body(new NewProductPayload(title, details))
             .retrieve()
-            .toBodilessEntity()
+            .toBodilessEntity();
         } catch (HttpClientErrorException.BadRequest ex) {
             ProblemDetail problemDetail = ex.getResponseBodyAs(ProblemDetail.class);
             throw new BadRequestException((List<String>)problemDetail.getProperties().get("errors"));

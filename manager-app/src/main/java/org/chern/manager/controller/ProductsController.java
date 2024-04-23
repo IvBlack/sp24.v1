@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.chern.manager.client.ProductsRestClient;
 import org.chern.manager.controller.payload.NewProductPayload;
 import org.chern.manager.entity.Product;
-import org.chern.manager.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
