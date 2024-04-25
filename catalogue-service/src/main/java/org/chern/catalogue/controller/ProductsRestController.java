@@ -25,7 +25,6 @@ import java.util.Map;
 @RequestMapping("catalogue-api/products")
 public class ProductsRestController {
     private final ProductService productService;
-    private final MessageSource messageSource;
 
     @GetMapping
     public List<Product> findProducts() {

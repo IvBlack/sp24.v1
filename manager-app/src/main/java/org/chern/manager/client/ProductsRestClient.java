@@ -12,7 +12,7 @@ import java.util.Optional;
 RestTemplate Spring.
 * */
 public interface ProductsRestClient {
-    public List<Product> findAllProducts();
+    List<Product> findAllProducts();
 
     Product createProduct(String title, String details);
     Optional<Product> findProduct(int productId);

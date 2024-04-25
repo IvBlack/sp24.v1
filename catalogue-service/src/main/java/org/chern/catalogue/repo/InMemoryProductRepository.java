@@ -28,12 +28,10 @@ public class InMemoryProductRepository implements ProductRepository {
     * */
     @Override
     public Product save(Product product) {
-        product.setId(
-                this.products.stream()
+        product.setId(this.products.stream()
                         .max(Comparator.comparingInt(Product::getId))
                         .map(Product::getId)
-                        .orElse(0)
-                            + 1);
+                        .orElse(0) + 1);
         this.products.add(product);
         return product;
     }

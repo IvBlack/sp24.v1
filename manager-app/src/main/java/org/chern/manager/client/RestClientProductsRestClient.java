@@ -24,7 +24,8 @@ public class RestClientProductsRestClient  implements ProductsRestClient {
         привести этот объект к безопасному по типу представлению.
         Это противоречит цели использования языков типов и снижает производительность.
     */
-    private static final ParameterizedTypeReference<List<Product>>  PRODUCTS_TYPE_REFERENCE = new ParameterizedTypeReference<>() {};
+    private static final ParameterizedTypeReference<List<Product>>  PRODUCTS_TYPE_REFERENCE =
+            new ParameterizedTypeReference<>() {};
 
     private final RestClient restClient;
 
@@ -67,7 +68,7 @@ public class RestClientProductsRestClient  implements ProductsRestClient {
         try {
             return Optional.ofNullable(this.restClient
                     .get()
-                    .uri("/catalogue-api/products/productId", productId)
+                    .uri("/catalogue-api/products/{productId}", productId)
                     .retrieve()
                     .body(Product.class));
         } catch (HttpClientErrorException.NotFound ex) {

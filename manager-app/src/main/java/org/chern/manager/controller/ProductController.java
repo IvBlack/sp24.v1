@@ -2,6 +2,7 @@ package org.chern.manager.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.chern.manager.client.BadRequestException;
 import org.chern.manager.client.ProductsRestClient;
 import org.chern.manager.controller.payload.UpdateProductPayload;
 import org.chern.manager.entity.Product;
@@ -30,8 +31,8 @@ public class ProductController {
     */
     @ModelAttribute("product")
     public Product product(@PathVariable("productId") int productId) {
-        return this.productsRestClient.findProduct(productId).orElseThrow(()
-                -> new NoSuchElementException("{catalogue.errors.product.not_found}"));
+        return this.productsRestClient.findProduct(productId)
+                .orElseThrow(() -> new NoSuchElementException("catalogue.errors.product.not_found"));
     }
 
     //получить конкретный товар по его id
@@ -48,11 +49,20 @@ public class ProductController {
     Атрибут модели можно получать прямо в параметрах метода.
     Метод обновляет определенный по id продукт.
     Обновление полей сущности происходит через специально созданный для этого payload.
+
+    Удалена валидация из manager-app, перенесена в  catalogue-api.
     * */
     @PostMapping("edit")
-    public String updateProduct(@ModelAttribute("product") Product product, UpdateProductPayload payload) {
-        this.productsRestClient.updateProduct(product.id(), payload.title(), payload.details());
-        return "redirect:/catalogue/products/%d".formatted(product.id());
+    public String updateProduct(@ModelAttribute(name = "product", binding = false) Product product, UpdateProductPayload payload,
+                                Model model) {
+        try {
+            this.productsRestClient.updateProduct(product.id(), payload.title(), payload.details());
+            return "redirect:/catalogue/products/%d".formatted(product.id());
+        } catch (BadRequestException ex) {
+            model.addAttribute("payload", payload);
+            model.addAttribute("errors", ex.getErrors());
+            return "catalogue/products/edit";
+        }
     }
 
     @PostMapping("delete")

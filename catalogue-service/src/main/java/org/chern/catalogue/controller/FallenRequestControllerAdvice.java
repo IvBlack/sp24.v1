@@ -32,6 +32,7 @@ public class FallenRequestControllerAdvice {
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ProblemDetail> handleException(BindException exception, Locale locale) {
+        //>>>>>>>>>>>>>>>>>>>
         ProblemDetail problemDetail = ProblemDetail
                 .forStatusAndDetail(HttpStatus.BAD_REQUEST,
                         Objects.requireNonNull(this.messageSource.getMessage("errors.400.title",
