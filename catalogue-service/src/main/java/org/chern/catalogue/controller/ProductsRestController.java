@@ -27,10 +27,9 @@ public class ProductsRestController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> findProducts() {
+    public Iterable<Product> findProducts() {
         return this.productService.findAllProducts();
     }
-
 
     /*
         RequestBody подставляет тело запроса в соответствующий аргумент метода
