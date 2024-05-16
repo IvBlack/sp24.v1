@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров &ndash; Ритейл</title>
+</head>
+<body>
+<a href="/catalogue/products/create">+ Создать товар</a>
+<h1>Список товаров</h1>
+<form method="get" action="/catalogue/products/list">
+    <label>Фильтр:<input type="text" name="filter" value="3d">
+        <button type="submit">Поиск</button>
+    </label>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Товар</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>5</td>
+        <td>
+            <a href="/catalogue/products/5">3d stuff</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

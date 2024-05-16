@@ -1,0 +1,59 @@
+GET http://localhost:8080/catalogue/products/list?filter=3d
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T180932.200.html
+
+###
+
+GET http://localhost:8080/catalogue/products/list?filter=3d
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T173624.200.html
+
+###
+
+GET http://localhost:8080/catalogue/products/list?filter=3d
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T171420.200.html
+
+###
+
+GET http://localhost:8080/catalogue/products/list
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T170533.200.html
+
+###
+
+GET http://localhost:8080/catalogue/products/list
+Content-Type: application/json
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T170118.200.html
+
+###
+
+GET http://localhost:8080/catalogue/products/list
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.9)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2024-05-16T165740.200.html
+
+###
+
