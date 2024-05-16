@@ -1,4 +1,4 @@
 retail:
-  service:
+  services:
     catalogue:
       uri: http://localhost:8081

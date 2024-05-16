@@ -2,15 +2,15 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/catalogue
     username: postgres
-    password: catalogue
-  #с какими схемами будет работать flywaydb
+    password: pass
   flyway:
     schemas:
       - public
       - catalogue
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL8Dialect
+    show-sql: true
 server:
   port: 8081
+logging:
+  level:
+    sql: info

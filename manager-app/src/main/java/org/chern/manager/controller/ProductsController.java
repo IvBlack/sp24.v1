@@ -1,43 +1,36 @@
 package org.chern.manager.controller;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.chern.manager.client.BadRequestException;
 import org.chern.manager.client.ProductsRestClient;
 import org.chern.manager.controller.payload.NewProductPayload;
 import org.chern.manager.entity.Product;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@Data
 @RequiredArgsConstructor
 @RequestMapping("catalogue/products")
 public class ProductsController {
 
-    //Сервис заменен на RestClient с аналогичными методами по работе с сущностью.
     private final ProductsRestClient productsRestClient;
 
     @GetMapping("list")
-    public String getProductsList(Model model) {
-        model.addAttribute("products", this.productsRestClient.findAllProducts());
+    public String getProductsList(Model model, @RequestParam(name = "filter", required = false) String filter) {
+        model.addAttribute("products", this.productsRestClient.findAllProducts(filter));
+        model.addAttribute("filter", filter);
         return "catalogue/products/list";
     }
 
     @GetMapping("create")
-    public String getNewProduct() {
+    public String getNewProductPage() {
         return "catalogue/products/new_product";
     }
 
-    /*
-        Задача - получить данные из формы на фронте, на их основе создать новый продукт.
-        Данные опишем на основе объекта payload.NewProductPayload.
-
-        Удалена валидация из manager-app, перенесена в  catalogue-api.
-    */
     @PostMapping("create")
     public String createProduct(NewProductPayload payload,
                                 Model model) {
