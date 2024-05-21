@@ -9,6 +9,12 @@ spring:
       - catalogue
   jpa:
     show-sql: true
+  security:
+    user:
+      name: catalogue_service_user
+      password: pass
+      roles:
+        - SERVICE
 server:
   port: 8081
 logging:
