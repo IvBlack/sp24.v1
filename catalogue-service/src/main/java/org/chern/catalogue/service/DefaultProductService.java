@@ -15,6 +15,7 @@ public class DefaultProductService implements ProductService {
 
     private final ProductRepository productRepository;
 
+    //filtering on server side
     @Override
     public Iterable<Product> findAllProducts(String filter) {
         if (filter != null && !filter.isBlank()) {
