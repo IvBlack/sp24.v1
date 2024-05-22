@@ -18,7 +18,8 @@ public class ClientBeans {
     {
         return new RestClientProductsRestClient(RestClient.builder()
                 .baseUrl(catalogueBaseUri)
-                .requestInterceptor(new BasicAuthenticationInterceptor(catalogueUsername, cataloguePassword))
+                .requestInterceptor(
+                        new BasicAuthenticationInterceptor(catalogueUsername, cataloguePassword))
                 .build());
     }
 }

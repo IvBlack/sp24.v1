@@ -4,3 +4,9 @@ retail:
       uri: http://localhost:8081
       username: catalogue_service_user
       password: pass
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/manager
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
