@@ -10,3 +10,22 @@ spring:
     username: postgres
     password: pass
     driver-class-name: org.postgresql.Driver
+# configuring security context with oAuth2
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/retail
+            # main name in generated ID keycloak token
+            user-name-attribute: preffered-username
+        registration:
+              keycloak:
+                - client-id:
+                - client-secret:
+                - scope:
+                    - openid
+                    - view_catalogur
+                    - edit_catalogue
+                    - microprofile_jwt
+
