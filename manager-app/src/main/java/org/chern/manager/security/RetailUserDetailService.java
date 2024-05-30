@@ -19,8 +19,9 @@ public class RetailUserDetailService implements UserDetailsService {
     private final RetailUserRepository retailUserRepository;
 
     /*
-    Get user from the DB, mapping in the UserDetails context.
-    Lazy operation getAuthorities() is compensated by transaction aspect in which the method is wrapped.
+        Get user from the DB, mapping in the UserDetails context.
+        Lazy operation getAuthorities() is compensated by
+        transaction aspect in which the method is wrapped.
     */
     @Override
     @Transactional(readOnly = true)

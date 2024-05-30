@@ -10,11 +10,10 @@ spring:
   jpa:
     show-sql: true
   security:
-    user:
-      name: catalogue_service_user
-      password: '{noop}pass'
-      roles:
-        - SERVICE
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/retail
 server:
   port: 8081
 logging:
