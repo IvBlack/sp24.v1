@@ -24,15 +24,17 @@ public class ClientSecurityBeans {
     /*
         Контекст безопасности.
         Требование аутентификации пользователя с определенной ролью к ресурсам.
-        Схема: доступ к ресурсу - пеерадресация spring security на keycloak - ввод логина и пароля -
+        Схема: доступ к ресурсу - переадресация spring security на keycloak - ввод логина и пароля -
         spring security получает ключ доступа - обращение на end-point юзера с запросом прав -
         создание http-сессии.
+        В контекст безопасности добавлена поддержка oauth2Client.
     */
     @Bean
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth.anyRequest().hasRole("MANAGER"))
                 .oauth2Login(Customizer.withDefaults())
+                .oauth2Client(Customizer.withDefaults())
                 .build();
     }
 
