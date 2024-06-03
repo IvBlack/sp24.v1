@@ -1,5 +1,6 @@
 package org.chern.manager.controller;
 
+import org.chern.manager.client.BadRequestException;
 import org.chern.manager.client.ProductsRestClient;
 import org.chern.manager.controller.payload.NewProductPayload;
 import org.chern.manager.entity.Product;
@@ -11,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.ConcurrentModel;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -52,6 +55,30 @@ class ProductsControllerTest {
 
         //check mock-object is called and no any requests within test-method
         verify(this.productsRestClient).createProduct(eq("Новый товар"), eq("Описание нового товара"));
+        verifyNoMoreInteractions(this.productsRestClient);
+    }
+
+    @Test
+    @DisplayName("createProduct вернет страницу с ошибками, если запрос невалидлен.")
+    void createProduct_RequestIsInvalid_ReturnsProductsFormWithErrors() {
+        //given
+        var payload = new NewProductPayload("   ", null);
+        var model = new ConcurrentModel();
+
+        doThrow(new BadRequestException(List.of("Ошибка 1", "Ошибка 2")))
+                .when(this.productsRestClient)
+                .createProduct("   ", null);
+
+        //when
+        var result = this.controller.createProduct(payload, model);
+
+        //then
+        assertEquals("catalogue/products/new_product", result);
+        assertEquals(payload, model.getAttribute("payload"));
+        assertEquals(List.of("Ошибка 1", "Ошибка 2"), model.getAttribute("errors"));
+
+        //check mock-object is called and no any requests within test-method
+        verify(this.productsRestClient).createProduct("   ", null);
         verifyNoMoreInteractions(this.productsRestClient);
     }
 }
