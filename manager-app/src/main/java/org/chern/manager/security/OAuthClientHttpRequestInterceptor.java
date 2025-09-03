@@ -1,7 +1,7 @@
 package org.chern.manager.security;
 
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import java.io.IOException;
+
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -13,30 +13,38 @@ import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 
-import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-//custom oauth2 interceptor
+/**
+* Реализация перехватчика запросов пользователей.
+*/
 @RequiredArgsConstructor
 public class OAuthClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
-    //info about current authorized user is here
+    // информация о текущем авторизованном пользователе
     private final OAuth2AuthorizedClientManager oAuth2AuthorizedClientManager;
 
-    //oauth identifier to get access keys
+    // идентификатор oauth для получения ключей доступа
     private final String regId;
 
-    /*
-        Get current security context (thread), SecurityContextHolder is default.
-        Set-method is for change type to another securityContextHolderStrategy if needed
+    /**
+    * Метод установки стратегий безопасности и авторизации
+    * 
+    * @SecurityContextHolder контекст безопасности (по умолчанию)
+    * @Setter для изменения типа на другую стратегию ContextHolderStrategy (при необходимости)
     */
     @Setter
     private SecurityContextHolderStrategy securityContextHolderStrategy =
             SecurityContextHolder.getContextHolderStrategy();
 
 
-    //build authorizedClient with token value in headers
+    /**
+    * Метод-перехватчик запросов клиентов
+    * 
+    * @authorizedClient собранный авторизованный клиент со значением токена в заголовках
+    */ 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte @NotNull [] body,
                                         @NotNull ClientHttpRequestExecution execution) throws IOException {
