@@ -14,8 +14,12 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 public class CatalogueSecurityBeans {
 
+    /**
+    * Реализация oauth2-аутентификации между сервисами с подавлением сессий
+    * и без csrf-проверок.
+    *
+    */
     @Bean
-    //oauth2 without sessions and csrf checking between services
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
@@ -32,6 +36,23 @@ public class CatalogueSecurityBeans {
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(STATELESS))
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
                         .jwt(Customizer.withDefaults()))
-                .build();
+        .build();
     }
+
+
+    /**
+    * Реализация basic-аутентификации между сервисами с подавлением сессий.
+    * Сессии генерируются servlet-контейнером, но не будут использоваться в цепочке фильтров.
+    *
+    */
+//     @Bean
+//     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//         return http.
+//                 authorizeHttpRequests(authorizeHttpRequests ->
+//                         authorizeHttpRequests.requestMatchers("/catalogue-api/**")
+//                 .hasRole("SERVICE"))
+//                 .httpBasic(Customizer.withDefaults())
+//                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(STATELESS))
+//         .build();
+//     }
 }

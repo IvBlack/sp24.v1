@@ -31,11 +31,30 @@ public class ProductRestController {
                 .orElseThrow(() -> new NoSuchElementException("catalogue.errors.product.not_found"));
     }
 
+    /**
+     *
+     * @param product
+     * @return
+     */
     @GetMapping
     public Product findProduct(@ModelAttribute("product") Product product) {
         return product;
     }
 
+
+    /**
+     * Метод обрабатывает HTTP-запрос типа PATCH для обновления продукта в каталоге.
+     * Принимает ID продукта и объект UpdateProductPayload с новыми данными (заголовок и детали продукта).
+     * Проверяет валидность входных данных через BindingResult.
+     * В случае успеха вызывает сервис productService.updateProduct()
+     * для обновления данных продукта и возвращает ResponseEntity.noContent() (статус 204 — «нет содержимого»).
+     *
+     * @param productId
+     * @param payload
+     * @param bindingResult
+     * @return ResponseEntity.noContent()
+     * @throws BindException
+     */
     @PatchMapping
     public ResponseEntity<?> updateProduct(@PathVariable("productId") int productId,
                                            @Valid @RequestBody UpdateProductPayload payload,
