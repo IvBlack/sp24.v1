@@ -41,10 +41,15 @@ public class OAuthClientHttpRequestInterceptor implements ClientHttpRequestInter
 
 
     /**
-    * Метод-перехватчик запросов клиентов
-    * 
-    * @authorizedClient собранный авторизованный клиент со значением токена в заголовках
-    */ 
+     * Метод-перехватчик запросов клиентов.
+     * Предназначен для автоматической подстановки токена авторизации в запросы, если он отсутствует.
+     * authorizedClient - собранный авторизованный клиент со значением токена в заголовках
+     *
+     * @param request       HTTP‑запрос, который нужно обработать
+     * @param body          тело запроса (массив байт)
+     * @return execution    передаёт управление дальше по цепочке перехватчиков
+     * @throws IOException
+     */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte @NotNull [] body,
                                         @NotNull ClientHttpRequestExecution execution) throws IOException {

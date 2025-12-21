@@ -1,6 +1,5 @@
 package org.chern.manager.security;
 
-import jakarta.transaction.TransactionScoped;
 import lombok.RequiredArgsConstructor;
 import org.chern.manager.entity.Authority;
 import org.chern.manager.repository.RetailUserRepository;
@@ -18,11 +17,15 @@ public class RetailUserDetailService implements UserDetailsService {
 
     private final RetailUserRepository retailUserRepository;
 
-    /*
-        Get user from the DB, mapping in the UserDetails context.
-        Lazy operation getAuthorities() is compensated by
-        transaction aspect in which the method is wrapped.
-    */
+    /**
+     * Получение пользователя из базы данных, сопоставление в контексте UserDetails.
+     * Ленивая операция getAuthorities() компенсируется
+     * транзакционным аспектом, в который обернут метод.
+     *
+     * @param login
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
