@@ -17,14 +17,27 @@ public class ProductsController {
 
     private final ProductsClient productsClient;
 
+    /**
+     * Запрос списка товаров.
+     * Агрегация Flux в Mono<List>
+     * Размещение списка товаров в модели.
+     *
+     * (!) Не используем в цепочке ".subscribe(products -> ...)" во избежание неожиданного
+     * асинхронного поведения.
+     *
+     * @param model          Модель для размещения в UI
+     * @param filter         Данные фильтрации по выборке из репо
+     * @return Mono<String>
+     */
     @GetMapping("list")
-    public Mono<String> getProductsListPage(Model model,
-                                            @RequestParam(name = "filter", required = false) String filter) {
+    public Mono<String> getProductsListPage(final Model model,
+                                            @RequestParam(name = "filter", required = false) final String filter) {
+
         model.addAttribute("filter", filter);
+
         return this.productsClient.findAllProducts(filter)
-                .collectList()
-//                .subscribe(products -> model.addAttribute("products", products))
-                .doOnNext(products -> model.addAttribute("products", products))
-                .thenReturn("customer/products/list");
+            .collectList()
+            .doOnNext(products -> model.addAttribute("products", products))
+            .thenReturn("customer/products/list");
     }
 }
