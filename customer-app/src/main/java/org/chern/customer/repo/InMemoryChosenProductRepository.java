@@ -23,9 +23,15 @@ public class InMemoryChosenProductRepository implements ChosenProductRepository 
         return Mono.just(chosenProduct);
     }
 
-    // TODO: realize
+
+    /**
+     * Удаление товара из списка избранных в памяти приложения.
+     * @param productId
+     * @return Mono.empty()
+     */
     @Override
     public Mono<Void> deleteByProductId(int productId) {
-        return null;
+        this.chosenProductlist.removeIf(chosenProduct -> chosenProduct.getProductId() == productId);
+        return Mono.empty();
     }
 }

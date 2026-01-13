@@ -3,11 +3,9 @@ package org.chern.customer.controller;
 import lombok.RequiredArgsConstructor;
 import org.chern.customer.client.ProductsClient;
 import org.chern.customer.entity.Product;
+import org.chern.customer.service.ChosenProductService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 /**
@@ -20,6 +18,8 @@ import reactor.core.publisher.Mono;
 public class ProductController {
 
     private final ProductsClient productsClient;
+
+    private final ChosenProductService chosenProductService;
 
     /**
      * Неблокирующий поиск товара по идентификатору в каталоге.
@@ -38,5 +38,19 @@ public class ProductController {
     @GetMapping
     public String getProductPage() {
         return "customer/products/product";
+    }
+
+    /**
+     * Контроллер добавляет товар в список избранных,
+     * перенаправляет исполнение на страницу товара в едином стриме.
+     * @param monoProduct  модель товара
+     * @return страница конкретного товара
+     */
+    @PostMapping("put-to-chosen")
+    public Mono<String> putProductToChosen(@ModelAttribute("product") Mono<Product> monoProduct) {
+        return monoProduct
+                .map(Product::id)
+                .flatMap(id -> this.chosenProductService.addProductToChosen(id) // <- объединение стримов
+                    .thenReturn("redirect:/customer/products/%d".formatted(id)));
     }
 }
