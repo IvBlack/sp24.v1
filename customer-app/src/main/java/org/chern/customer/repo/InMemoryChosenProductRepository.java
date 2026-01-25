@@ -2,6 +2,7 @@ package org.chern.customer.repo;
 
 import org.chern.customer.entity.ChosenProduct;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
@@ -33,5 +34,19 @@ public class InMemoryChosenProductRepository implements ChosenProductRepository 
     public Mono<Void> deleteByProductId(int productId) {
         this.chosenProductlist.removeIf(chosenProduct -> chosenProduct.getProductId() == productId);
         return Mono.empty();
+    }
+
+    /**
+     * Ищет в хранилище товар по метке "В избранном" и
+     * отображает информацию на UI в виде кнопки button.
+     *
+     * @param productId  id искомого товара
+     * @return           продукт в избранном либо null
+     */
+    @Override
+    public Mono<ChosenProduct> findByProductId(int productId) {
+        return Flux.fromIterable(this.chosenProductlist)
+            .filter(chosenProduct -> chosenProduct.getProductId() == productId)
+            .singleOrEmpty(); // <- аналог findFirst()
     }
 }

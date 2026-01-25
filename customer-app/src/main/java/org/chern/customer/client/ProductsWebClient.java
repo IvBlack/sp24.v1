@@ -48,7 +48,7 @@ public class ProductsWebClient implements ProductsClient {
     public Mono<Product> findProduct(final int id) {
         return this.webClient
                 .get()
-                .uri("/catalogue-api/products/productId")
+                .uri("/catalogue-api/products/{productId}", id)
                 .retrieve()
                 .bodyToMono(Product.class);
     }

@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 /**
- * Отдельный контроллер для работы с
- * единичным товаром.
+ * Отдельный контроллер для работы с единичным товаром.
  */
 @Controller
 @RequiredArgsConstructor
@@ -44,13 +43,27 @@ public class ProductController {
      * Контроллер добавляет товар в список избранных,
      * перенаправляет исполнение на страницу товара в едином стриме.
      * @param monoProduct  модель товара
-     * @return страница конкретного товара
+     * @return             страница конкретного товара
      */
     @PostMapping("put-to-chosen")
     public Mono<String> putProductToChosen(@ModelAttribute("product") Mono<Product> monoProduct) {
         return monoProduct
                 .map(Product::id)
                 .flatMap(id -> this.chosenProductService.addProductToChosen(id) // <- объединение стримов
+                    .thenReturn("redirect:/customer/products/%d".formatted(id)));
+    }
+
+    /**
+     * Контроллер удаляет товар из списка избранных,
+     * перенаправляет исполнение на страницу товара в едином стриме.
+     * @param monoProduct  модель товара
+     * @return             страница конкретного товара
+     */
+    @DeleteMapping("delete-from-chosen")
+    public Mono<String> removeProductFromChosen(@ModelAttribute("product") Mono<Product> monoProduct) {
+        return monoProduct
+                .map(Product::id)
+                .flatMap(id -> this.chosenProductService.removeProductFromChosen(id)
                     .thenReturn("redirect:/customer/products/%d".formatted(id)));
     }
 }

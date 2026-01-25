@@ -10,4 +10,6 @@ public interface ChosenProductRepository {
     Mono<ChosenProduct> save(ChosenProduct chosenProduct);
 
     Mono<Void> deleteByProductId(int productId);
+
+    Mono<ChosenProduct> findByProductId(int productId);
 }
