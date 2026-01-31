@@ -6,6 +6,7 @@ import org.chern.customer.repo.ProductCommentRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import java.util.UUID;
 
 /**
  *  * Дефолтный сервис-слой для работы с комментариями к товару.
@@ -20,11 +21,12 @@ public class DefaultProductCommentService implements ProductCommentService {
 
     @Override
     public Mono<ProductComment> createProductComment(int productId, String review, int rating) {
-        return null;
+        return this.productCommentRepository
+                .save(new ProductComment(UUID.randomUUID(), productId, review, rating));
     }
 
     @Override
     public Flux<ProductComment> findCommentByProductId(int productId) {
-        return null;
+        return this.productCommentRepository.findAllCommentByproductId(productId);
     }
 }
