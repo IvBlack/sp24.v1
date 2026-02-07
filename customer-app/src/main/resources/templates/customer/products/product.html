@@ -8,5 +8,14 @@
 <a data-th-href="@{/customer/products/list}">&larr; К списку товаров -></a>
 <h1 data-th-text="${product.title}"></h1>
 <p data-th-text="${product.details}"></p>
+
+<form method="post" data-th-action="@{/customer/products/{productId}/put-to-chosen(productId=${product.id})}"
+      data-th-if="${!isChosen}">
+    <button type="submit" title="Добавить в избранное.."></button>
+</form>
+<form method="post" data-th-action="@{/customer/products/{productId}/delete-from-chosen(productId=${product.id})}"
+      data-th-if="${isChosen}">>
+    <button type="submit" title="Удалить из избранного.."></button>
+</form>
 </body>
 </html>

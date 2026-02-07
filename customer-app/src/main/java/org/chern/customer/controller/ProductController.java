@@ -36,11 +36,12 @@ public class ProductController {
     /**
      * Получение страницы конкретного товара из каталога c суммарной информацией
      * о комментариях и признаку того, находится ли в избранном.
+     * Два объединеных streams.
      * @return  шаблон страницы товара
      */
     @GetMapping
     public Mono<String> getProductPage(@PathVariable("productId") int productId, Model model) {
-        model.addAttribute("isChosen", false);
+        model.addAttribute("isChosen", false); // <- если стрим не пуст, флаг смменится на true
         return this.productCommentService.findCommentByProductId(productId)
             .collectList()
             .doOnNext(productComments -> model.addAttribute("productComments", productComments))
