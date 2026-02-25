@@ -2,6 +2,7 @@ package org.chern.customer.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.chern.customer.client.ProductsClient;
+import org.chern.customer.controller.payload.NewProductCommentPayload;
 import org.chern.customer.entity.Product;
 import org.chern.customer.service.ChosenProductService;
 import org.chern.customer.service.ProductCommentService;
@@ -46,8 +47,8 @@ public class ProductController {
             .collectList()
             .doOnNext(productComments -> model.addAttribute("productComments", productComments))
             .then(this.chosenProductService.findChosenProductByProduct(productId)
-                    .doOnNext(chosenProduct -> model.addAttribute("isChosen", true))
-                    .thenReturn("customer/products/product")
+                .doOnNext(chosenProduct -> model.addAttribute("isChosen", true))
+                .thenReturn("customer/products/product")
             );
     }
 
@@ -74,8 +75,14 @@ public class ProductController {
     @DeleteMapping("delete-from-chosen")
     public Mono<String> removeProductFromChosen(@ModelAttribute("product") Mono<Product> monoProduct) {
         return monoProduct
-                .map(Product::id)
-                .flatMap(id -> this.chosenProductService.removeProductFromChosen(id)
-                    .thenReturn("redirect:/customer/products/%d".formatted(id)));
+            .map(Product::id)
+            .flatMap(id -> this.chosenProductService. removeProductFromChosen(id)
+                .thenReturn("redirect:/customer/products/%d".formatted(id)));
+    }
+
+    @PostMapping("create-comment")
+    public Mono<String> createProductComment(NewProductCommentPayload payload, @PathVariable("productId") int productId) {
+        return this.productCommentService.createProductComment(productId, payload.comment(), payload.rating())
+            .thenReturn("redirect:/customer/products/%d".formatted(productId));
     }
 }

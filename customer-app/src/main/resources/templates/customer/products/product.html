@@ -11,11 +11,29 @@
 
 <form method="post" data-th-action="@{/customer/products/{productId}/put-to-chosen(productId=${product.id})}"
       data-th-if="${!isChosen}">
-    <button type="submit" title="Добавить в избранное.."></button>
+    <button type="submit">Добавить в избранное..></button>
 </form>
 <form method="post" data-th-action="@{/customer/products/{productId}/delete-from-chosen(productId=${product.id})}"
       data-th-if="${isChosen}">>
-    <button type="submit" title="Удалить из избранного.."></button>
+    <button type="submit">Удалить из избранного..></button>
 </form>
+<h2>Отзывы и комментарии</h2>
+<form method="post" data-th-action="@{/customer/products/{productId}/create-comment(productId=${product.id})}">
+    <label><input type="radio" name="rating" value="1"> 1</label>
+    <label><input type="radio" name="rating" value="2"> 2</label>
+    <label><input type="radio" name="rating" value="3"> 3</label>
+    <label><input type="radio" name="rating" value="4"> 4</label>
+    <label><input type="radio" name="rating" value="5"> 5</label>
+    <br>
+    <label>
+        Комментарий:<br>
+        <textarea name="review"></textarea>
+    </label><br>
+    <button type="submit">Отправить комментарий...</button>
+</form>
+<div data-th-each="comment : ${comments}">
+    <h3>[[${comment.rating}]]*</h3>
+    <p data-th-text="${comment.comment}"></p>
+</div>
 </body>
 </html>
