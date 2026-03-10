@@ -8,6 +8,8 @@ import org.chern.customer.service.ChosenProductService;
 import org.chern.customer.service.ProductCommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -81,8 +83,19 @@ public class ProductController {
     }
 
     @PostMapping("create-comment")
-    public Mono<String> createProductComment(NewProductCommentPayload payload, @PathVariable("productId") int productId) {
-        return this.productCommentService.createProductComment(productId, payload.comment(), payload.rating())
-            .thenReturn("redirect:/customer/products/%d".formatted(productId));
+    public Mono<String> createProductComment(NewProductCommentPayload payload,
+                                             @PathVariable("productId") int productId,
+                                             BindingResult bindingResult,
+                                             Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("payload", payload);
+            model.addAttribute("errors", bindingResult.getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
+                .toList());
+            return Mono.just("redirect:/customer/products/%d".formatted(productId));
+        } else {
+            return this.productCommentService.createProductComment(productId, payload.comment(), payload.rating())
+                .thenReturn("redirect:/customer/products/%d".formatted(productId));
+        }
     }
 }
