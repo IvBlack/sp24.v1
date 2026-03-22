@@ -2,9 +2,9 @@ package org.chern.customer.service;
 
 import lombok.RequiredArgsConstructor;
 import org.chern.customer.entity.ChosenProduct;
-import org.chern.customer.entity.Product;
 import org.chern.customer.repo.ChosenProductRepository;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -36,5 +36,10 @@ public class DefaultChosenProductService implements ChosenProductService {
     @Override
     public Mono<ChosenProduct> findChosenProductByProduct(int productId) {
         return this.chosenProductRepository.findByProductId(productId);
+    }
+
+    @Override
+    public Flux<ChosenProduct> findChosenProducts() {
+        return null;
     }
 }
